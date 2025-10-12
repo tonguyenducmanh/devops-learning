@@ -30,6 +30,10 @@ pip install -r requirements.txt
 sed -i 's/redis_host = .*/redis_host = "127.0.0.1"/' app.py
 ./venv/bin/gunicorn app:app -b 0.0.0.0:8000 --workers 4
     + using systemd để quản lý app
+
+
+note: thay tên ubuntu ở dưới bằng tên user
+
 sudo tee /etc/systemd/system/vote.service <<'EOF'
 [Unit]
 Description=Flask Voting App (Gunicorn)
@@ -71,9 +75,9 @@ bật tường lửa trên ubuntu
 
 ufw status
 sudo ufw status
-sudo ufw allow tcp/22
-sudo ufw allow tcp/6379
-sudo ufw allow tcp/8000
+sudo ufw allow 22/tcp
+sudo ufw allow 6379/tcp
+sudo ufw allow 8000/tcp
 sudo ufw enable
 sudo ufw status
 
