@@ -67,6 +67,17 @@ sudo systemctl status vote
 curl http://127.0.0.1:8000
 
 
+bật tường lửa trên ubuntu
+
+ufw status
+sudo ufw status
+sudo ufw allow tcp/22
+sudo ufw allow tcp/6379
+sudo ufw allow tcp/8000
+sudo ufw enable
+sudo ufw status
+
+
 Trong bài lab này mn sẽ sử dụng/đào tạo các kỹ năng sau:
 
 Kỹ năng cần sử dụng trong buổi lab
