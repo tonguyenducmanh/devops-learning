@@ -60,6 +60,20 @@ sudo usermod -aG docker ubuntu
 echo "=== CÀI ĐẶT THÊM CÔNG CỤ unzip ==="
 sudo apt install -y unzip
 
+# nén 2 folder adv-demo và nginx-demo vào thành file docker.zip
+
+# copy vào trong ubuntu ở folder /home/ubuntu/code/docker.zip
+
+# giải nén bằng lệnh sau
+
+cd /home/ubuntu/code/
+
+unzip docker.zip
+
+# xóa file zip đã giải nén
+
+rm docker.zip
+
 # ---------------------------------------------------------------
 
 # 🧩 TÙY CHỈNH GIAO DIỆN NGinx TRONG DOCKER IMAGE
