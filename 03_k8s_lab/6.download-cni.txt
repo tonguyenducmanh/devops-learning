@@ -1,0 +1,15 @@
+#Them repo private vao trong Containerd
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."172.16.204.150"]
+          endpoint = ["http://172.16.204.150"]
+#Add helm repo 
+helm repo add cilium http://172.16.204.150/chartrepo/sre
+#Tao namespace cho cni
+kubectl create ns cilium
+#Download cni
+helm fetch sre/cilium --untar
+#Su dung helm install cni
+cd cilium/
+helm install cilium -f values-test.yaml . -n cilium
+
+

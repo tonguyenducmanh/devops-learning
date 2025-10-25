@@ -1,0 +1,13 @@
+{
+  "name": "docker-node-mongo-counter",
+  "version": "1.0.0",
+  "description": "Simple visitor counter app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0"
+  }
+}

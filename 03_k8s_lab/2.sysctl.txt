@@ -1,0 +1,64 @@
+# ====== File descriptor và inotify (I/O, file watch limit) ======
+
+fs.file-max = 1048576                          # Max file descriptors toàn h? th?ng
+fs.nr_open = 1048576                          # Gi?i h?n file descriptors t?i da mà user-level process có th? m?
+fs.inotify.max_user_watches = 524288          # S? lu?ng file du?c theo dõi b?i inotify (?nh hu?ng d?n IDE, tools dev)
+fs.inotify.max_user_instances = 1024          # S? lu?ng instance inotify m?i user có th? t?o
+
+# ====== Memory Management ======
+
+vm.max_map_count=262144                       # Required for Elasticsearch, Java apps dùng mmap
+
+# ====== TCP Connection Reliability ======
+
+net.ipv4.tcp_retries2 = 5                     # Gi?m retry time TCP n?u peer không ph?n h?i — gi?m TIMEOUT t?ng
+net.ipv4.tcp_fastopen = 3                     # B?t TCP Fast Open cho c? server + client (gi?m latency TCP handshake)
+
+# ====== Network: ARP cache tuning ======
+
+# Tang gi? lâu hon các ARP entry cu, phù h?p scrape t?n su?t th?p
+net.ipv4.neigh.default.gc_stale_time = 600   # gi? 10 phút
+net.ipv4.neigh.default.gc_interval = 30      # gi? nguyên, v?n quét thu?ng xuyên
+
+net.ipv4.neigh.default.gc_thresh1 = 1024      # ARP cache GC — b?t d?u thu gom
+net.ipv4.neigh.default.gc_thresh2 = 2048      # ARP cache GC — tang cu?ng thu gom
+net.ipv4.neigh.default.gc_thresh3 = 4096      # ARP cache GC — ngu?ng t?i da
+
+# ====== Network: Port Range ======
+
+net.ipv4.ip_local_port_range = 10000 65535    # M? r?ng range c?ng outbound — t?t cho microservices, socket nhi?u
+
+# ====== Network: Socket Buffer + Connection Backlog ======
+
+net.core.somaxconn = 1000000                  # T?i da backlog cho socket listen queue
+net.core.rmem_max = 16777216                  # Max TCP read buffer (bytes)
+net.core.wmem_max = 16777216                  # Max TCP write buffer (bytes)
+net.ipv4.tcp_rmem = 4096 12582912 16777216    # TCP read buffer: min/default/max
+net.ipv4.tcp_wmem = 4096 12582912 16777216    # TCP write buffer: min/default/max
+net.ipv4.tcp_mem = 786432 1697152 1945728     # TCP stack buffer: min/pressure/max (in memory pages)
+net.core.netdev_max_backlog = 4096            # Packet backlog n?u CPU chua x? lý k?p
+
+# ====== TCP Behavior Tuning ======
+
+net.ipv4.tcp_max_syn_backlog = 65535          # S? SYN ch? trong queue — gi?m l?i connect reset
+net.ipv4.tcp_max_tw_buckets = 400000          # Max TIME_WAIT buckets — tang kh? nang scale
+net.ipv4.tcp_tw_reuse = 1                     # Reuse TIME_WAIT connections (tang t?c d? open socket m?i)
+net.ipv4.tcp_fin_timeout = 15                 # Timeout FIN_WAIT_2 — gi?m th?i gian gi? k?t n?i dóng
+net.ipv4.tcp_no_metrics_save = 1              # Không luu cache TCP metric theo IP client
+net.ipv4.tcp_syn_retries = 2                  # Retry k?t n?i SYN — gi?m delay khi peer không ph?n h?i
+net.ipv4.tcp_synack_retries = 2               # Retry g?i SYN+ACK — tang t?c accept
+net.ipv4.ip_forward = 1                       # Cho phép forwarding IP — b?t bu?c cho container, VPN, k8s
+net.ipv4.ip_nonlocal_bind = 1                 # Cho phép bind IP chua gán interface — dùng cho HA, IPVS, kube-proxy
+
+# ====== Netfilter Conntrack (cho iptables/ipvs trong Kubernetes) ======
+
+net.netfilter.nf_conntrack_max = 1048576
+net.netfilter.nf_conntrack_buckets = 262144
+net.netfilter.nf_conntrack_tcp_timeout_established = 1800 # b?ng m?c trên firewall
+net.netfilter.nf_conntrack_tcp_timeout_close_wait = 60
+
+# ====== IPv6 (disable n?u không dùng) ======
+
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1

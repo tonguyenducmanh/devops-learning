@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # Dịch vụ ứng dụng web
+  webapp:
+    build: ./app  # Chỉ dẫn Docker Compose build image từ thư mục 'app'
+    ports:
+      - "8080:3000" # Ánh xạ cổng 8080 của máy host vào cổng 3000 của container
+    environment:
+      # Cung cấp biến môi trường cho ứng dụng Node.js
+      # 'mongo' là tên của service MongoDB bên dưới
+      - MONGO_URI=mongodb://mongo:27017/webapp
+    depends_on:
+      - mongo # Yêu cầu service 'mongo' phải khởi động trước 'webapp'
+
+  # Dịch vụ cơ sở dữ liệu
+  mongo:
+    image: mongo:latest # Sử dụng image chính thức của MongoDB từ Docker Hub
+    ports:
+      - "27017:27017" # Ánh xạ cổng để có thể truy cập DB từ máy host (tùy chọn)
+    volumes:
+      - mongo-data:/data/db # Gắn một volume để lưu trữ dữ liệu DB
+
+volumes:
+  mongo-data: # Định nghĩa một named volume để dữ liệu không bị mất khi container bị xóa
