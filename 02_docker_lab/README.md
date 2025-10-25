@@ -78,11 +78,41 @@ rm docker.zip
 
 # 🧩 TÙY CHỈNH GIAO DIỆN NGinx TRONG DOCKER IMAGE
 
+cd vào thư mục nginx-demo
+
 # ---------------------------------------------------------------
 
 # 1. Tạo file index.html tuỳ chỉnh (ví dụ: echo 'Hello Docker!' > index.html)
 
 # 2. Build image mới từ Dockerfile có sẵn (docker build -t custom-nginx .)
+
+(đảm bảo khi chạy lệnh sau phải đứng ở thư mục có Dockerfile)
+
+docker build -t custom-nginx .
+
+# dùng lệnh sau để run
+
+docker run -d --name test-nginx -p 8080:80 custom-nginx
+
+# dùng lệnh sau để check xem có chưa
+
+docker ps
+
+# check cả container đã dừng
+
+docker ps -a
+
+# dừng container
+
+docker stop <tên hoặc id container>
+
+# xóa container
+
+docker rm <tên hoặc id container>
+
+# xóa image
+
+docker rmi <tên image>
 
 # 3. Dùng `docker load` nếu bạn có file image .tar cần import (vd: docker load < myimage.tar)
 
