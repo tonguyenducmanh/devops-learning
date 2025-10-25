@@ -116,6 +116,12 @@ docker rmi <tên image>
 
 # 3. Dùng `docker load` nếu bạn có file image .tar cần import (vd: docker load < myimage.tar)
 
+# chuyển sang adv-demo
+
+cd vào thư mục adv-demo
+
+đọc nội dung trong file readme.txt
+
 # 4. Chạy image bằng docker-compose (docker compose up -d)
 
 # 5. Truy cập container để quản lý database (vd: docker exec -it <tên-container> mongosh)
