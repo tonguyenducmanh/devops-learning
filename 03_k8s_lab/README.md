@@ -111,6 +111,7 @@ sudo vim /etc/sysctl.conf (qua vim)
 sudo sysctl -p (apply config)
 B3: Chạy Script install package của k8s
 B4: Cài đặt Helm (chi chay tren ipmaster)
+shutdown ubuntu và khởi chạy lại (thì bước 5 mới không báo lỗi)
 B5: Tạo file khởi tạo cụm (chi chay tren ipmaster) => tao file config de o thu muc home (init-config.yaml)
 sau do chay lenh de run file
 sau do enter cac lenh duoc recommend cua k8s
