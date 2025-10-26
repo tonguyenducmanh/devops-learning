@@ -25,3 +25,11 @@ Then you can join any number of worker nodes by running the following on each as
 
 kubeadm join 192.168.0.101:6443 --token xjyion.s9ps4lnkw8tiutbk \
  --discovery-token-ca-cert-hash sha256:7c66fcfa1a8995510debbc345b020658c8b8b8d9cd8d33687fa2166162566f6f
+
+
+kubeadm join ...
+Chức năng: Sử dụng lệnh này trên các máy chủ Worker.
+
+Vai trò: Các Node này sẽ được sử dụng để chạy các ứng dụng (Pods), không giữ các thành phần Control Plane.
+
+Quan trọng: Token và Hash trong lệnh join này có thời hạn sử dụng. Nếu bạn không sử dụng chúng trong vòng 24 giờ, bạn sẽ cần tạo Token mới bằng lệnh kubeadm token create.
