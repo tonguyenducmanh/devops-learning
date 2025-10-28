@@ -1,7 +1,21 @@
 #Them repo private vao trong Containerd
+
+vào trong file config bằng vim /etc/containerd/config.toml
+
+:set number enter
+
+tìm tới dòng 170 bằng 170G enter
+
+paste dòng dưới vào
+
 [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."172.16.204.150"]
           endpoint = ["http://172.16.204.150"]
+
+sau khi thêm dòng trên, save file, sau đó chạy lệnh dưới để restart Containerd
+
+service containerd restart
+     
 #Add helm repo 
 helm repo add cilium http://172.16.204.150/chartrepo/sre
 #Tao namespace cho cni
