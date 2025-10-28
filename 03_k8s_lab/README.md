@@ -129,4 +129,8 @@ sau do enter cac lenh duoc recommend cua k8s
 
 B6: Dowwnload và install CNI vào cụm
 
+sau đó kiểm tra bằng kubectl get nodes => nếu có control plane và worker là oke
+
+sau đó kiểm tra kubectl get pods -A, nếu có kube và cilium là oke
+
 https://runbook.misa.vn/2024/06/11/sre-check-list-khi-cai-dat-docker-swarm/
