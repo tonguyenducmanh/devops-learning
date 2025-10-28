@@ -15,13 +15,14 @@ paste dòng dưới vào
 sau khi thêm dòng trên, save file, sau đó chạy lệnh dưới để restart Containerd
 
 service containerd restart
-     
+service kubelet restart
+
 #Add helm repo 
 helm repo add cilium http://172.16.204.150/chartrepo/sre
 #Tao namespace cho cni
 kubectl create ns cilium
 #Download cni
-helm fetch sre/cilium --untar
+helm fetch cilium/cilium --untar
 #Su dung helm install cni
 cd cilium/
 helm install cilium -f values-test.yaml . -n cilium
