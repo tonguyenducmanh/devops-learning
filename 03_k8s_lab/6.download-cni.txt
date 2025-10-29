@@ -21,6 +21,11 @@ service kubelet restart
 helm repo add cilium http://172.16.204.150/chartrepo/sre
 #Tao namespace cho cni
 kubectl create ns cilium
+
+search cilium for fetch
+
+helm search repo 
+
 #Download cni
 helm fetch cilium/cilium --untar
 #Su dung helm install cni
