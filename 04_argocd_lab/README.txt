@@ -24,9 +24,9 @@ kubectl get nodes
 
 kubectl get pod -A
 
-nếu chưa cần sửa lại cấu hình yaml giống bên master
+nếu chưa cần sửa lại cấu hình toml giống bên master
 
-vim /etc/containerd/config.yaml
+vim /etc/containerd/config.toml
 
 thêm cái đoạn
 
@@ -89,3 +89,56 @@ tìm đường dẫn bằng command helm repo ls
 sau đó ấn connect
 
 phần connection status successful là oke
+
+tạo app bằng argocd
+
+vào application ấn new app
+
+đặt tên, chọn project
+
+kéo xuống dưới chọn repo url
+
+chọn chart, chọn version (chọn chart nào nhẹ nhẹ thôi)
+
+phần destination chọn cluster url
+
+phần helm chọn values file
+
+sau đó bấm create
+
+vào app vừa tạo
+
+bấm vào sync
+
+bấm vào synchronize
+
+nếu có lỗi không có quyền deploy lên namespace thì quay lại bước project sre
+
+kiểm tra xem đã có cấu hình namespace ở phần destination chưa
+
+khi synchronize lại tích prune + force (có thể tích cả prune last)
+
+sau đó quay lại kube kiểm tra pod
+
+kubectl get pod -n tên namespace
+
+kubectl get svc -n tên namespace
+
+tìm cái nodeport xem ports là bao nhiêu
+
+ví dụ là 32098
+
+nhập vào địa chỉ ip ubuntu + :32098 (vd 10.10.132.14:32098)
+
+
+sau đó tìm cách vào được cái kubeneties dashboard bằng bearer token
+
+nhập lệnh 
+
+kubectl get secret -n tên namespace
+
+copy name
+
+tạo token bằng
+
+kubectl describle secret tên user -n tên namespace
