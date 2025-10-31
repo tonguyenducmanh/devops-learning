@@ -143,4 +143,4 @@ copy name
 
 tạo token bằng
 
-kubectl describle secret tên user -n tên namespace
+kubectl describe secret tên user -n tên namespace
