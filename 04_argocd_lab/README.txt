@@ -70,6 +70,8 @@ ví dụ kubectl create namespace sre-test
 
 thì namespace để là sre-test sẽ mapping với sre-test, nếu để là "sre*" sẽ mapping hết tất cả sre
 
+tiếp theo kéo xuống phần cluster resource allow list edit chọn *
+
 tiếp theo vào repository để cấu hình repo, tương ứng với helm chart ở trên habo
 
 ấn vào connect repo
