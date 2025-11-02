@@ -20,3 +20,12 @@ ufw allow 8080/tcp comment 'cAdvisor metrics'
 ufw allow 8080/tcp comment 'Published service port (example)'
 ufw allow 443/tcp comment 'HTTPS service'
 ufw allow 80/tcp comment 'HTTP service'
+
+ufw allow 6443/tcp comment 'Kubernetes API server'
+ufw allow 2379:2380/tcp comment 'etcd server client API'
+ufw allow 10250/tcp comment 'Kubelet API'
+ufw allow 10257/tcp comment 'kube-controller-manager'
+ufw allow 10259/tcp comment 'kube-scheduler'
+ufw allow 30000:32767/tcp comment 'NodePort Services'
+
+ufw enable

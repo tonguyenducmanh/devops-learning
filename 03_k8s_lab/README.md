@@ -1,4 +1,3 @@
-
 # ================================================================
 
 # 🐳 HƯỚNG DẪN CÀI ĐẶT DOCKER + CONTAINERD CHUẨN BỊ CHO K8S
@@ -180,15 +179,34 @@ B4: Cài đặt Helm (chi chay tren ipmaster)
 
 shutdown ubuntu và khởi chạy lại (thì bước 5 mới không báo lỗi)
 
-B5: Tạo file khởi tạo cụm (chi chay tren ipmaster) => tao file config de o thu muc home (init-config.yaml)
+B5: Tạo file khởi tạo cụm (chi chay tren ipmaster)
 
-sau do chay lenh de run file
+cd /home/ubuntu/
 
-sau do enter cac lenh duoc recommend cua k8s
+vim init-config.yaml
 
-=> check bang command sudo crictl ps
+copy nội dung file init-fonfig.yaml vào, sửa lại ip của ubuntu master đang dùng
+
+sau đó chạy
+
+kubeadm init --config init-config.yaml
+
+kiểm tra bằng command
+
+sudo crictl ps
+
+kubectl get pods -A
+kubectl get nodes
+
+Lưu ý, việc các node từ not ready sang ready cần thời gian vài phút
+
+nếu như chạy lệnh recommend để kết nối từ máy ubuntu worker vào máy ubuntu master không được,
+
+vui lòng kiểm tra xem tường lửa có chặn port k8s đang kết nối không
 
 B6: Dowwnload và install CNI vào cụm
+
+tham khảo file download cni, lưu ý sửa lại cấu hình ip máy master
 
 sau đó kiểm tra bằng kubectl get nodes => nếu có control plane và worker là oke
 
