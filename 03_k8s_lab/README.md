@@ -12,7 +12,7 @@ copy nội dung netplan.txt vào đây
 
 sau đó chạy
 
-netplan apply
+sudo netplan --debug apply
 
 # ================================================================
 
