@@ -1,3 +1,15 @@
+# cấu hình netplan (quan trọng nhất nếu xài vmware)
+
+vào file netplan.txt, sửa lại ip mong muốn
+
+sudo vim /etc/netplan/00-installer-config.yaml
+
+copy nội dung netplan.txt vào đây
+
+sau đó chạy
+
+netplan apply
+
 # ================================================================
 
 # 🐳 HƯỚNG DẪN CÀI ĐẶT DOCKER + CONTAINERD CHUẨN BỊ CHO K8S
@@ -226,7 +238,6 @@ sau đó kiểm tra bằng kubectl get nodes => nếu có control plane và work
 sau đó kiểm tra kubectl get pods -A, nếu có kube và cilium là oke
 
 https://runbook.misa.vn/2024/06/11/sre-check-list-khi-cai-dat-docker-swarm/
-
 
 sau này, nếu từng shutdown máy master và máy worker, nếu khởi động lại chạy kubectl get nodes thấy báo lỗi
 
