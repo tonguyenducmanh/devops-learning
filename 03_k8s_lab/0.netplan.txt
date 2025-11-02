@@ -3,12 +3,10 @@ network:
   renderer: networkd
   ethernets:
     ens160:
-      dhcp4: no
+      dhcp4: false
       addresses:
-        - 192.168.0.100/24
+        - 192.168.1.100/24  # Thay đổi địa chỉ IP theo nhu cầu
+      gateway4: 192.168.1.1  # Địa chỉ gateway của bạn
       nameservers:
-        search: [local]
-        addresses: [8.8.8.8, 8.8.4.4]
-      routes:
-        - to: default
-          via: 192.168.0.1
+        addresses:
+          - 8.8.8.8
