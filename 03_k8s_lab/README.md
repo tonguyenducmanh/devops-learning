@@ -226,3 +226,16 @@ sau đó kiểm tra bằng kubectl get nodes => nếu có control plane và work
 sau đó kiểm tra kubectl get pods -A, nếu có kube và cilium là oke
 
 https://runbook.misa.vn/2024/06/11/sre-check-list-khi-cai-dat-docker-swarm/
+
+
+sau này, nếu từng shutdown máy master và máy worker, nếu khởi động lại chạy kubectl get nodes thấy báo lỗi
+
+kiểm tra xem đã có config chưa
+
+ls ~/.kube/config
+
+nếu không có, dùng lệnh sau để tạo lại
+
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
