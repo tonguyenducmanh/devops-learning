@@ -1,6 +1,10 @@
 # cấu hình netplan (quan trọng nhất nếu xài vmware)
 
-vào file netplan.txt, sửa lại ip mong muốn
+kiểm tra loại mạng bằng
+
+ip a
+
+vào file netplan.txt, sửa lại ip mong muốn, thay thế loại mạng vào nếu khác ( chỗ ens160)
 
 sudo vim /etc/netplan/00-installer-config.yaml
 
