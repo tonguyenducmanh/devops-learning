@@ -204,6 +204,19 @@ nếu như chạy lệnh recommend để kết nối từ máy ubuntu worker và
 
 vui lòng kiểm tra xem tường lửa có chặn port k8s đang kết nối không
 
+trường hợp máy worker và máy master trùng tên, chạy lệnh sau để đổi host name ở máy worker
+
+sudo hostnamectl set-hostname worker1
+exec bash
+
+sau đó chạy lại lệnh join có cấu trúc như sau
+
+sudo kubeadm reset -f
+sudo systemctl restart containerd
+
+sudo kubeadm join 192.168.0.100:6443 --token ... \
+ --discovery-token-ca-cert-hash sha256:....
+
 B6: Dowwnload và install CNI vào cụm
 
 tham khảo file download cni, lưu ý sửa lại cấu hình ip máy master
