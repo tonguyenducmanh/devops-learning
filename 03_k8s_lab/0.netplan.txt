@@ -5,7 +5,7 @@ network:
     ens160:
       dhcp4: no
       addresses:
-        - 192.168.0.100/24 #ip của máy ubuntu
+        - 192.168.0.100/24
       nameservers:
         search: [local]
         addresses: [8.8.8.8, 8.8.4.4]
