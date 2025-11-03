@@ -2,7 +2,7 @@
 
 kiểm tra loại mạng bằng
 
-ip a
+ip a (hoặc ip link)
 
 vào file netplan.txt, sửa lại ip mong muốn, thay thế loại mạng vào nếu khác ( chỗ ens160)
 
@@ -12,7 +12,16 @@ copy nội dung netplan.txt vào đây
 
 sau đó chạy
 
-sudo netplan --debug apply
+sudo netplan apply
+sudo systemctl restart systemd-networkd
+
+kiểm tra xem còn bao nhiêu ip đang hoạt động
+
+hostname -I
+
+thực hiện xóa ip cũ nếu vẫn còn ( chú ý interface enp2s0 phải thay đổi theo interface của máy)
+
+sudo ip addr del 192.168.0.104/24 dev enp2s0
 
 # ================================================================
 
