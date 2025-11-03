@@ -15,11 +15,18 @@ kiểm tra trạng thái pod
 
 kubectl get pods -n argocd
 
-Port-forward server
+dùng lệnh dưới để mở port truy cập được từ máy ngoài
 
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'}'
 
-Sau đó truy cập trên máy local: https://localhost:8080
+
+sau đó chạy lệnh dưới để xem port của argocd-server (NodePort)
+
+kubectl get svc -n argocd
+
+sau đó, ngoài trình duyệt truy cập theo ip ubuntu + port ví dụ
+
+192.168.0.169:31767
 
 Lấy mật khẩu admin
 
