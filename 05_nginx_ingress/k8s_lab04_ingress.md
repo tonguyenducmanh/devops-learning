@@ -25,7 +25,7 @@ Giờ hãy cùng bắt đầu nhé!
 - **ArgoCD:**
   - Repo: `sre`
   - Project: `sre`
-  - Applications: Đang quản lý `k8s-dashboard` và `goldpinger`.
+  - Applications: Đã triển khai được application lên argocd.
 
 ---
 
@@ -44,6 +44,7 @@ Giờ hãy cùng bắt đầu nhé!
 
 - File share: `\\10.100.17.107\Share\lab04\charts`
 - Copy các chart có trong thư mục `charts` lên máy k8s master `/home/ubuntu/lab04/`
+- Nguồn chart nginx-ingress: `https://github.com/nginx/kubernetes-ingress/tree/v2.3.0/deployments/helm-chart`
 
 ### 3.1. Kết nối helm repo `k8s-lab`
 
@@ -63,7 +64,7 @@ helm plugin install https://github.com/chartmuseum/helm-push
 
 ```bash
 cd /home/ubuntu/lab04/
-CP -r demo-app-nginx-ingress nvson-demo-app-nginx-ingress
+cp -r demo-app-nginx-ingress nvson-demo-app-nginx-ingress
 cd nvson-demo-app-nginx-ingress
 nano Chart.yaml
 # sửa name: nvson-demo-app-nginx-ingress
@@ -176,7 +177,7 @@ Chúng ta sẽ điều hướng traffic từ `demoapp.misa.vn/debezium-ui` tới
 
 #### 4.1.1. Cấu hình Upstream và Route
 
-Bạn cần cập nhật file cấu hình `values.yaml` để khai báo dịch vụ đích (`debezium-ui`) là một **Upstream** và định nghĩa một \*_Route_ mới.
+Bạn cần cập nhật file cấu hình `values.yaml` để khai báo dịch vụ đích (`debezium-ui`) là một **Upstream** và định nghĩa một **Route** mới.
 
 **Bước 1: Cập nhật `values.yaml`**
 
@@ -285,3 +286,41 @@ virtualServerRoutes:
 - Kiểm tra kết quả:
   - Mở VSR `debezium-vsr`, xem tab Events, thấy message `Configuration for sre/debezium-vsr was added or updated`
   - Truy cập url: `http://demoapp.misa.vn:31228/debezium-tool/`
+
+# Kết Luận Workshop
+
+Tuyệt vời! Chúng ta đã hoàn thành workshop **Cấu hình Điều hướng Dịch vụ với Nginx Ingress**.
+
+Hôm nay, chúng ta đã biến Ingress Controller trở thành một phần của luồng **GitOps** bằng cách quản lý nó thông qua **Helm Chart** và **ArgoCD**.
+
+- **Triển khai GitOps cho Ingress**: Chúng ta đã triển khai Nginx Ingress Controller vào cluster thông qua ArgoCD, đảm bảo mọi thay đổi về hạ tầng điều hướng đều được kiểm soát và ghi lại trong Git.
+
+- **Điều hướng cơ bản (VirtualServer)**: Đã cấu hình thành công việc điều hướng giữa các dịch vụ trong cùng Namespace (`demoapp` đến `debezium-ui`) bằng tài nguyên **VirtualServer**.
+
+- **Điều hướng đa Namespace (VirtualServerRoute)**: Đã giải quyết kịch bản thực tế khi Ingress Controller cần điều hướng đến Service nằm ở Namespace khác (`sre``) bằng cách sử dụng tài nguyên **VirtualServerRoute (VSR)**, cho thấy khả năng phân quyền và chia sẻ điều hướng một cách an toàn.
+
+Bây giờ, bạn đã có một "người gác cổng" an toàn, có tổ chức và tự động hóa cho các ứng dụng Kubernetes của mình!
+
+# Hướng Mở Rộng & Chủ Đề Nâng Cao
+
+Để tiếp tục hành trình tối ưu hóa việc điều hướng, đây là hai hướng mở rộng bạn có thể khám phá:
+
+## 1. Điều Hướng Đến Dịch Vụ Ngoài Cụm K8s (External Services)
+
+Trong thực tế, không phải tất cả các dịch vụ đều chạy trong cùng một cluster K8s. Nginx Ingress cho phép bạn định tuyến traffic tới các dịch vụ nằm bên ngoài cụm (ví dụ: một Database chạy trên VM, một API Gateway, hoặc một ứng dụng cũ).
+
+- Cách thực hiện: Bạn sẽ khai báo một **Endpoints** trỏ tới một địa chỉ IP hoặc DNS bên ngoài cluster thay vì trỏ tới một Service K8s.
+
+- Lợi ích: Cho phép Ingress Controller đóng vai trò là điểm truy cập thống nhất (Single Point of Entry) cho cả ứng dụng K8s và ứng dụng Non-K8s.
+
+## 2. Sử Dụng VirtualServerRoute (VSR) Trong Cùng Namespace
+
+Mặc dù VSR thường được dùng để điều hướng đa Namespace, nhưng nó cũng là một công cụ mạnh mẽ để **phân chia cấu hình** ngay trong cùng Namespace.
+
+Kịch bản: Thay vì nhồi nhét tất cả các rule (routes) vào một VirtualServer (VS) khổng lồ, bạn có thể tạo một **VS chính** và sử dụng nhiều **VSR** nhỏ hơn, mỗi VSR quản lý routing cho một microservice cụ thể.
+
+- Lợi ích:
+
+  - Phân quyền/Độc lập: Đội phát triển của Microservice A chỉ cần quản lý file VSR của họ, không cần chạm vào file VSR của Microservice B.
+
+  - Tính Mô-đun (Modularity): Dễ đọc, dễ bảo trì và giảm thiểu rủi ro khi thay đổi cấu hình
