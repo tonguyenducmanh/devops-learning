@@ -1,4 +1,6 @@
-#!/bin/bash
+cách cài đặt docker tham khảo từ trang chủ sau:
+
+https://docs.docker.com/engine/install/ubuntu/
 
 # ================================================================
 
