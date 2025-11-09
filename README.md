@@ -14,6 +14,8 @@ Cài trên vmware, chọn mạng cấu hình mạng là bridge, sau đó làm t�
 
 login vào ubuntu
 
+## chuyển config mạng ubuntu sang static ip
+
 dùng command sau để kiểm tra xem ubuntu này có ip là gì
 
 ```
@@ -60,4 +62,60 @@ apply config mạng bằng lệnh dưới
 ```
 sudo netplan apply
 sudo systemctl restart systemd-networkd
+```
+
+## cài đặt docker
+
+cách cài đặt docker tham khảo từ trang chủ sau:
+
+https://docs.docker.com/engine/install/ubuntu/
+
+login vào ubuntu bằng quyền root
+
+```
+sudo -i
+```
+
+cd vào thư mục user (vd là ubuntu)
+
+```
+cd /home/ubuntu/
+```
+
+tạo file cài đặt docker
+
+```
+vim install-docker.sh
+```
+
+paste nội dung sau vào file cài
+
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+cấp quyền cho file cài
+
+```
+chmod 777 install-docker.sh
+```
+
+chạy file vừa tạo để cài docker
+
+```
+./install-docker.sh
 ```
