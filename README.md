@@ -119,3 +119,5 @@ chạy file vừa tạo để cài docker
 ```
 ./install-docker.sh
 ```
+
+# Cài đặt k8s

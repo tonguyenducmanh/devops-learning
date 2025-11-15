@@ -30,7 +30,7 @@ EOF
 sudo sysctl --system
 
 
-# Cài d?t kubenertes:
+# Cï¿½i d?t kubenertes:
 apt-get install -y apt-transport-https ca-certificates curl gnupg
 mkdir -p -m 755 /etc/apt/keyrings
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
