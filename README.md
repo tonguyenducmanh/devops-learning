@@ -187,6 +187,15 @@ Tham khảo tài liệu từ trang:
 
 https://v1-33.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
+cd vào thư mục user:
+
+```
+cd /home/ubuntu
+```
+
+copy comand dưới vào trong file install-k8s.sh và chạy file này
+(vim instasll-k8s.sh để tạo file, copy vào sau đó :wq để lưu, và chạy chmod 777 install-k8s.sh để cấp quyền, chạy ./install-k8s.sh để chạy script)
+
 ```
 sudo swapoff -a
 sudo sed -i 's/\/swap/#\/swap/g' /etc/fstab
@@ -218,4 +227,12 @@ EOF
 
 systemctl daemon-reload
 
+```
+
+# Cài đặt helm (chỉ làm trên máy ubuntu master)
+
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
 ```
