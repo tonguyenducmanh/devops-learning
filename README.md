@@ -289,3 +289,29 @@ sudo crictl ps
 kubectl get pods -A
 kubectl get nodes
 ```
+
+# cài cilium
+
+ADD CILIUM PUBLIC HELM REPOSITORY
+
+```
+helm repo add cilium https://helm.cilium.io/
+helm repo update
+```
+
+Tạo namespace cho Cilium
+
+```
+kubectl create ns cilium
+```
+
+Thay 192.168.0.169 bằng IP Master Node thực tế của bạn.
+
+```
+helm install cilium cilium/cilium --namespace cilium \
+ --version 1.15.5 \
+ --set k8sServiceHost=192.168.0.169 \
+ --set k8sServicePort=6443 \
+ --set hubble.enabled=true \
+ --set routingMode=tunnel
+```
