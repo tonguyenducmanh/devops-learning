@@ -187,14 +187,9 @@ Tham khảo tài liệu từ trang:
 
 https://v1-33.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
-tắt swap:
-
 ```
 sudo swapoff -a
 sudo sed -i 's/\/swap/#\/swap/g' /etc/fstab
-```
-
-```
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 mkdir -p -m 755 /etc/apt/keyrings
