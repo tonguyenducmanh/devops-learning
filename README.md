@@ -277,15 +277,15 @@ apt install -y conntrack
 
 sau đó lưu file và chạy
 
+```
 kubeadm init --config kubeadm-config.yaml
+```
 
 kiểm tra bằng command
 
+```
 sudo crictl ps
 
 kubectl get pods -A
 kubectl get nodes
-
-```
-
 ```
