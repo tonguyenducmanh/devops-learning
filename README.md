@@ -236,3 +236,56 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 ```
+
+# Init config k8s (chỉ làm trên máy ubuntu master)
+
+```
+cd /home/ubuntu/
+```
+
+clone config default
+
+```
+kubeadm config print init-defaults > kubeadm-config.yaml
+```
+
+sửa lại 1 số thông tin trong config:
+
+```
+vim kubeadm-config.yaml
+```
+
+tìm đoạn kind: ClusterConfiguration, bổ sung thêm dòng
+
+```
+controlPlaneEndpoint: "192.168.0.169:6443"  # Sua IP cua master
+```
+
+ở phần networking bổ sung thêm:
+
+```
+networking:
+  podSubnet: "10.244.0.0/16"
+```
+
+cài thêm package này để tránh lỗi
+
+```
+apt update
+apt install -y conntrack
+```
+
+sau đó lưu file và chạy
+
+kubeadm init --config kubeadm-config.yaml
+
+kiểm tra bằng command
+
+sudo crictl ps
+
+kubectl get pods -A
+kubectl get nodes
+
+```
+
+```
