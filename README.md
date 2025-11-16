@@ -237,6 +237,8 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 ```
 
+sau đó restart ubuntu master
+
 # Init config k8s (chỉ làm trên máy ubuntu master)
 
 ```
