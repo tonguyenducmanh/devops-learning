@@ -120,4 +120,65 @@ chạy file vừa tạo để cài docker
 ./install-docker.sh
 ```
 
+# Cài đặt containerd
+
+```
+#!/bin/bash
+set -e
+
+sudo apt update && sudo apt upgrade -y
+
+# 2. CÀI containerd
+# Docs: https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+sudo apt install -y containerd
+
+
+# 3. TẠO CONFIG FOLDER
+# Docs: https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+sudo mkdir -p /etc/containerd
+
+
+# 4. TẠO FILE CONFIG MẶC ĐỊNH
+# containerd config default → lệnh chính thức
+# Docs: https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+sudo containerd config default | sudo tee /etc/containerd/config.toml > /dev/null
+
+
+# 5. BẬT SystemdCgroup CHO KUBERNETES
+# Lý do: Kubernetes yêu cầu systemd cgroup driver
+# Docs: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd-systemd
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+
+
+# 6. BẬT MODULE overlay & br_netfilter
+# Required cho container networking
+# Docs: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#loading-kernel-modules
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
+
+sudo modprobe overlay
+sudo modprobe br_netfilter
+
+
+# 7. BẬT SYSCTL CHO KUBERNETES / NETWORK
+# Docs: https://kubernetes.io/docs/setup/production-environment/container-runtimes/#sysctl
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
+
+sudo sysctl --system
+
+
+# 8. RESTART containerd + ENABLE
+# Docs: https://www.freedesktop.org/software/systemd/man/systemctl.html
+sudo systemctl restart containerd
+sudo systemctl enable containerd
+
+echo "=== DONE! containerd đã được cài đầy đủ ==="
+```
+
 # Cài đặt k8s
